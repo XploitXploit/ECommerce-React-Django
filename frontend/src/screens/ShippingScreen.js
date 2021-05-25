@@ -1,42 +1,46 @@
-import {useState, useEffect} from 'react'
-import { useLocation, useHistory } from 'react-router-dom';
+import {useState} from 'react'
+import { useHistory, Redirect } from 'react-router-dom';
 import { Form, Button,} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
+import ChekoutSteps from '../components/ChekoutSteps';
 import {saveShippingAddress} from '../actions/cartActions'
 
 function ShippingScreen() {
 
     const cart= useSelector(state => state.cart)
-    const {shippingAdress} = cart
+    const {shippingAddress} = cart
 
     const dispatch = useDispatch()
 
     const history = useHistory();
 
-    const [adress, setAddress] = useState(shippingAdress.adress)
-    const [city, setCity] = useState(shippingAdress.city)
-    const [postalCode, setPostalCode] = useState(shippingAdress.postalCode)
-    const [country, setCountry] = useState(shippingAdress.country)
+    const [address, setAddress] = useState(shippingAddress.address)
+    const [city, setCity] = useState(shippingAddress.city)
+    const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
+    const [country, setCountry] = useState(shippingAddress.country)
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(saveShippingAddress({adress,city, postalCode, country}))
-        history.push('/payment')
+        dispatch(saveShippingAddress({address,city, postalCode, country}))
+        if (shippingAddress) {
+            history.push('/payment')
+        }
     }
 
     return (
         <FormContainer>
+            <ChekoutSteps step1 step2/>
             <h1>Shipping</h1>
             <Form onSubmit={submitHandler}>
 
             <Form.Group controlId="address">
-                <Form.Label>Adress</Form.Label>
+                <Form.Label>Address</Form.Label>
                 <Form.Control
                     required
                     type='text'
                     placeholder= 'Enter Adress'
-                    value={adress ? adress:''}
+                    value={address ? address : ''}
                     onChange= {(e)=> setAddress(e.target.value)}
                 >
                 </Form.Control>

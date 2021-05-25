@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader'
@@ -21,7 +21,6 @@ function ProfileScreen() {
 
     const dispatch = useDispatch()
     
-    const location = useLocation()
     const history = useHistory()
 
     
